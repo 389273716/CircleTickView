@@ -25,3 +25,35 @@ This custom view main functions:
 1. Provide whether reset Settings (open after setting time and other peripheral location can reset), the default is 0, 0 case is representative of you to set the initial time of value.
 1. The offer is applicable to automatic countdown mode method, in order to better update the view shows.
 1. Provide listening time and scale changes.
+
+
+# How To Use
+```
+
+     <com.tc.library.CircleTickView
+        android:id="@+id/crpv_tick"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:paddingTop="40dp"
+        app:animDuration="500"
+        app:bottomText="Set Time"
+        app:isCanResetZero="true"
+        app:maxTime="1200000"
+        app:startTime="300000"
+        app:tickMaxCount="30"
+        />
+```
+
+```
+mCtvTime.setSelectTickCount(1, false);
+        mCurrentTime = mCtvTime.getCurrentTime();
+        mCtvTime.setOnTimeChangeListener(new CircleTickView.OnTimeChangeListener() {
+            @Override
+            public void onChange(long time, int tickCount) {
+                mCurrentTime = time;
+                LogUtil.e(TAG, mCurrentTime + "  mCurrentTime");
+
+                }
+            }
+        });
+```
