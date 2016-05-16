@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CircleTickView">
+        <attr name="selectTickColor" format="color" />
+        <attr name="defaultTickColor" format="color" />
+        <attr name="tickStrokeSize" format="dimension" />
+        <attr name="tickMaxCount" format="integer" />
+        <attr name="centerTextColor" format="color" />
+        <attr name="centerTextSize" format="dimension" />
+        <attr name="bottomTextColor" format="color" />
+        <attr name="bottomTextSize" format="dimension" />
+        <attr name="bottomText" format="string" />
+        <attr name="roundBackgroundColor" format="color" />
+        <attr name="animDuration" format="integer" />
+        <attr name="startTime" format="integer" />
+        <attr name="maxTime" format="integer" />
+        <attr name="isCanResetZero" format="boolean" />
+
+    </declare-styleable>
+</resources>
