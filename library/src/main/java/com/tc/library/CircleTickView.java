@@ -21,7 +21,7 @@ import java.math.BigDecimal;
 
 /**
  * author：   tc
- * date：     2016/4/28 & 12:09
+ * date     2016/4/28  12:09
  * version    1.0
  * description  圆形刻度view
  * modify by
@@ -211,7 +211,7 @@ public class CircleTickView extends View {
     /**
      * 设置刻度盘起始时间
      *
-     * @param startTime
+     * @param startTime 刻度盘起始时间
      */
     public void setStartTime(long startTime) {
         mStartTime = startTime;
@@ -220,7 +220,7 @@ public class CircleTickView extends View {
     /**
      * 是否允许触摸view使刻度归零
      *
-     * @return
+     * @return 是否允许触摸view使刻度归零
      */
     public boolean isCanResetZero() {
         return mIsCanResetZero;
@@ -261,13 +261,14 @@ public class CircleTickView extends View {
     /**
      * 设置当前选择的刻度总数
      *
-     * @param selectTickCount
+     * @param selectTickCount 选中的刻度
+     * @param isAnim          是否动画
      */
     public void setSelectTickCount(int selectTickCount, boolean isAnim) {
         mLastSelectTickCount = mSelectTickCount;//记录上一次的刻度值，以便触摸动画的起始位置从上一次开始增加或者减少
         mLastTime = mCurrentTime;
         mSelectTickCount = selectTickCount;
-        mCurrentTime = (mMaxTime - mStartTime) / mTickMaxCount  * mSelectTickCount +
+        mCurrentTime = (mMaxTime - mStartTime) / mTickMaxCount * mSelectTickCount +
                 mStartTime;
         //总时间减去起始时间求出每个刻度的时间，根据当前刻度选中数曾以刻度然后加上起始时间就是当前时间
         if (mBarAnimation != null && isAnim) {
@@ -285,7 +286,7 @@ public class CircleTickView extends View {
     /**
      * 设置刻度总数
      *
-     * @param tickMaxCount
+     * @param tickMaxCount 刻度总数
      */
     public void setTickMaxCount(int tickMaxCount) {
         mTickMaxCount = tickMaxCount;
@@ -304,6 +305,7 @@ public class CircleTickView extends View {
      * 设置当前时间
      *
      * @param currentTime long
+     * @param isAnim      是否动画
      */
     public void setCurrentTime(long currentTime, boolean isAnim) {
         mCurrentTime = currentTime;
@@ -314,7 +316,7 @@ public class CircleTickView extends View {
     /**
      * 获取当前时间所占百分比
      *
-     * @return
+     * @return 当前时间所占百分比
      */
     private double getTimePercent() {
         return (double) (mCurrentTime - mStartTime) /
@@ -328,7 +330,7 @@ public class CircleTickView extends View {
     /**
      * 当前设置时间
      *
-     * @return
+     * @return 当前设置时间
      */
     public long getCurrentTime() {
         return mCurrentTime;
@@ -337,7 +339,7 @@ public class CircleTickView extends View {
     /**
      * 获取当前选择的刻度总数
      *
-     * @return
+     * @return 获取当前选择的刻度总数
      */
     public int getSelectTickCount() {
         return mSelectTickCount;
@@ -471,9 +473,10 @@ public class CircleTickView extends View {
     /**
      * 判断象限，并且计算当前百分比
      *
-     * @param x     当前坐标x
-     * @param y     当前坐标y
-     * @param angle 角度
+     * @param x      当前坐标x
+     * @param y      当前坐标y
+     * @param angle  角度
+     * @param isAnim 是否动画
      */
     private void judgeQuadrantAndSetCurrentProgress(float x, float y, double angle, boolean
             isAnim) {
@@ -617,6 +620,10 @@ public class CircleTickView extends View {
 
     /**
      * 依圆心坐标，半径，扇形角度，计算出扇形终射线与圆弧交叉点的xy坐标
+     *
+     * @param radius   半径
+     * @param cirAngle 扇形角度
+     * @return 扇形终射线与圆弧交叉点的xy坐标
      */
     public float[] getCoordinatePoint(int radius, float cirAngle) {
         int position = mHeight / 2 - getPaddingBottom() - getPaddingTop();
@@ -688,13 +695,7 @@ public class CircleTickView extends View {
         }
     }
 
-    /**
-     * 根据手机的分辨率从 px(像素) 的单位 转成为 dp
-     */
-    public static int px2dip(Context context, final float pxValue) {
-        float density = context.getResources().getDisplayMetrics().density;
-        return (int) (pxValue / density + 0.5f);
-    }
+
 
     private int getDpValue(int w) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, w, getContext()
