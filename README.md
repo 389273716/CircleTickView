@@ -28,6 +28,11 @@ This custom view main functions:
 
 
 # How To Use
+
+```
+ compile "com.tc.circletickview:circletickview:1.0.0"
+```
+
 ```
 
      <com.tc.library.CircleTickView
