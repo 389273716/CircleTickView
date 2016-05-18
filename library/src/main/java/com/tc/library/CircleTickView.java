@@ -491,10 +491,16 @@ public class CircleTickView extends View {
         } else if (x >= mCircleCenterX && y >= mCircleCenterY) {
             //第二象限
             Log.i(TAG, "onTouchEvent: 第二象限");
-            if (angle <= 55) {//加10度
+            if (angle <= 65) {//加10度
                 percent = (angle + 225) / 270;
                 selectCount = getSelectCount(percent);
-                if (angle > 45 - (mSinglPoint / 2)) {
+                if (angle > 45) {
+                    selectCount = mTickMaxCount;
+                }
+            } else {
+                if (mIsCanResetZero) {//如果允许点击第二象限的空白区域归零，
+                    selectCount = 0;
+                } else {
                     selectCount = mTickMaxCount;
                 }
             }
@@ -507,10 +513,10 @@ public class CircleTickView extends View {
                 // 比如45度，percent是0，但是此时格子应该是1格。
                 selectCount = getSelectCount(percent) + 1;
                 //下面代码处理，点击第一个附近时都可以选中第一个
-                if (angle > 45 - (mSinglPoint / 2)) {
+                if (angle > 45) {
                     selectCount = 1;
                 }
-            } else if (angle > 65 && angle < 90) {
+            } else {
                 if (mIsCanResetZero) {//如果允许点击第三象限的空白区域归零，
                     selectCount = 0;
                 } else {
@@ -523,7 +529,7 @@ public class CircleTickView extends View {
             percent = (angle + 45) / 270;
             selectCount = getSelectCount(percent);
         }
-        Log.i(TAG, "onTouchEvent: selectCount:" + selectCount);
+        Log.i(TAG, "judgeQuadrantAndSetCurrentProgress: selectCount:" + selectCount);
         if (selectCount != mSelectTickCount) {
             //只有发生变化时，才重绘界面
             setSelectTickCount(selectCount, isAnim);
@@ -694,7 +700,6 @@ public class CircleTickView extends View {
             postInvalidate();
         }
     }
-
 
 
     private int getDpValue(int w) {

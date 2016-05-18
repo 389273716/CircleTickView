@@ -15,10 +15,6 @@ buildscript {
 
 allprojects {
     repositories {
-        maven {
-            // your bintray maven address . you can find it on
-            url 'https://dl.bintray.com/389273716/maven'
-        }
         jcenter()
     }
 }
