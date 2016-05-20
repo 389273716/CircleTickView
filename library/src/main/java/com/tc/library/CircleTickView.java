@@ -22,7 +22,7 @@ import java.math.BigDecimal;
 /**
  * author：   tc
  * date     2016/4/28  12:09
- * version    1.0
+ * version    0.2.0
  * description  圆形刻度view
  * modify by
  */
@@ -262,13 +262,14 @@ public class CircleTickView extends View {
      * 设置当前选择的刻度总数
      *
      * @param selectTickCount 选中的刻度
-     * @param isAnim          是否动画
+     * @param isAnim          是否开启动画
+     * @param isNotifyListener          是否通知监听器值的变化
      */
-    public void setSelectTickCount(int selectTickCount, boolean isAnim) {
+    public void setSelectTickCount(int selectTickCount, boolean isAnim, boolean isNotifyListener) {
         mLastSelectTickCount = mSelectTickCount;//记录上一次的刻度值，以便触摸动画的起始位置从上一次开始增加或者减少
         mLastTime = mCurrentTime;
         mSelectTickCount = selectTickCount;
-        mCurrentTime = (mMaxTime - mStartTime) / mTickMaxCount * mSelectTickCount +
+        mCurrentTime = (mMaxTime - mStartTime) / (mTickMaxCount - 1) * (mSelectTickCount - 1) +
                 mStartTime;
         //总时间减去起始时间求出每个刻度的时间，根据当前刻度选中数曾以刻度然后加上起始时间就是当前时间
         if (mBarAnimation != null && isAnim) {
@@ -278,9 +279,19 @@ public class CircleTickView extends View {
             mCenterText = formatTime(mCurrentTime);
             invalidate();
         }
-        if (mOnTimeChangeListener != null) {
+        if (mOnTimeChangeListener != null && isNotifyListener) {
             mOnTimeChangeListener.onChange(mCurrentTime, mSelectTickCount);
         }
+    }
+
+    /**
+     * 设置当前选择的刻度总数
+     *
+     * @param selectTickCount 选中的刻度
+     * @param isAnim          是否开启动画
+     */
+    public void setSelectTickCount(int selectTickCount, boolean isAnim) {
+        this.setSelectTickCount(selectTickCount, isAnim, true);
     }
 
     /**
@@ -464,6 +475,11 @@ public class CircleTickView extends View {
             case MotionEvent.ACTION_MOVE:
                 judgeQuadrantAndSetCurrentProgress(x, y, angle, false);
                 return true;
+            case MotionEvent.ACTION_UP:
+                if (mOnTimeChangeListener != null) {
+                    mOnTimeChangeListener.onChange(mCurrentTime, mSelectTickCount);
+                }
+                return true;
             default:
                 break;
         }
@@ -532,7 +548,7 @@ public class CircleTickView extends View {
         Log.i(TAG, "judgeQuadrantAndSetCurrentProgress: selectCount:" + selectCount);
         if (selectCount != mSelectTickCount) {
             //只有发生变化时，才重绘界面
-            setSelectTickCount(selectCount, isAnim);
+            setSelectTickCount(selectCount, isAnim, false);
         }
     }
 
