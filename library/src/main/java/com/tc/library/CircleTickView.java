@@ -425,7 +425,7 @@ public class CircleTickView extends View {
 
         mCircleRingPaint = new Paint();
         mCircleRingPaint.setColor(mDefaultTickColor);
-        mCircleRingPaint.setStyle(Paint.Style.STROKE);
+        mCircleRingPaint.setStyle(Paint.Style.FILL_AND_STROKE);
         mCircleRingPaint.setStrokeWidth(mTickStrokeSize);
         mCircleRingPaint.setAntiAlias(true);
 
