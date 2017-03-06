@@ -30,7 +30,7 @@ This custom view main functions:
 # How To Use
 
 ```
- compile 'com.tc.circletickview:library:0.1.1'
+ compile 'com.tc.circletickview:library:0.2.0'
 ```
 
 ```
